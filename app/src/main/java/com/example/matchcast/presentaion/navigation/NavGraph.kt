@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
-import com.example.matchcast.presentaion.screens.listmatch.ListMatchAction
-import com.example.matchcast.presentaion.screens.detail.DetailMatchAction
+import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchAction
+import com.example.matchcast.presentaion.screens.detail.states.DetailMatchAction
 
 @Serializable
 object ListMatchRoute

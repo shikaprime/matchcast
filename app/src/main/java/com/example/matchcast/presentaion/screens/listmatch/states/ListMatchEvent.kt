@@ -1,4 +1,4 @@
-package com.example.matchcast.presentaion.screens.listmatch
+package com.example.matchcast.presentaion.screens.listmatch.states
 
 sealed class ListMatchEvent{
     data object ReloadScreen: ListMatchEvent()

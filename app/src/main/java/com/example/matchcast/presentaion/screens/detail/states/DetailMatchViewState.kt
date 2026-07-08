@@ -1,4 +1,4 @@
-package com.example.matchcast.presentaion.screens.detail
+package com.example.matchcast.presentaion.screens.detail.states
 
 import com.example.matchcast.domain.model.Match
 

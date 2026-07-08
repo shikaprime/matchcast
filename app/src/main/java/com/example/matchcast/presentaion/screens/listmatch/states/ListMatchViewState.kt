@@ -1,7 +1,5 @@
-package com.example.matchcast.presentaion.screens.listmatch
+package com.example.matchcast.presentaion.screens.listmatch.states
 
-import android.media.Image
-import com.example.matchcast.data.local.AppDatabase
 import com.example.matchcast.domain.model.Match
 
 sealed class ListMatchViewState{
