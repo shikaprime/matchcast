@@ -5,4 +5,6 @@ sealed class DetailMatchEvent{
 
     data object ReloadScreen: DetailMatchEvent()
 
+    data object OnBackClick: DetailMatchEvent()
+
 }

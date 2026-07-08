@@ -5,6 +5,10 @@ sealed class ListMatchEvent{
 
     data object EnterScreen: ListMatchEvent()
 
+    data class SearchQueryChanged(val query: String) : ListMatchEvent()
+
+    object SearchClear : ListMatchEvent()
+
     data class OnMatchClick(
         val matchId: Int
     ): ListMatchEvent()
