@@ -1,6 +1,7 @@
 package com.example.matchcast.presentaion.navigation
 
 
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -9,18 +10,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
+import com.example.matchcast.presentaion.screens.listmatch.ListMatchAction
+import com.example.matchcast.presentaion.screens.detail.DetailMatchAction
 
 @Serializable
-object HomeRoute
+object ListMatchRoute
 
 @Serializable
-data class MatchDetailsRoute(val matchId: String)
+data class DetailMatchRoute(val matchId: Int)
 
-
-
-// =====================================================================
-// 2. ГЛАВНЫЙ КЛАСС / ФУНКЦИЯ ГРАФА НАВИГАЦИИ
-// =====================================================================
 
 @Composable
 fun AppNavGraph(
@@ -29,54 +27,45 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = HomeRoute, // Какой экран откроется первым
+        startDestination = ListMatchRoute,
         modifier = modifier
     ) {
 
-        // --- ТЕХНИЧЕСКОЕ ОПИСАНИЕ ЭКРАНА "ГЛАВНЫЙ" ---
-        composable<HomeRoute> {
-            /* Здесь мы вызываем твою реальную Composable-функцию HomeScreen.
-               Вместо того чтобы передавать внутрь HomeScreen сам navController,
-               мы перехватываем его внутренние события (UiEvent / Action) прямо здесь.
-            */
-            HomeScreen(
-                onEvent = { event ->
-                    when (event) {
-                        // Если на главном экране кликнули по матчу — навигируем на детали
-                        is HomeUiEvent.OnMatchClick -> {
-                            navController.navigate(MatchDetailsRoute(matchId = event.id))
+        composable<ListMatchRoute> {
+            ListMatchScreen(
+                onAction = { action ->
+                    when (action) {
+                        is ListMatchAction.NavigateToDetail -> {
+                            navController.navigate(DetailMatchRoute(matchId = action.matchId))
                         }
-
-                        else -> {}
+                        is ListMatchAction.CloseScreen -> {
+                        }
                     }
                 }
             )
         }
 
-        // --- ТЕХНИЧЕСКОЕ ОПИСАНИЕ ЭКРАНА "ДЕТАЛИ МАТЧА" ---
-        composable<MatchDetailsRoute> { backStackEntry ->
-            /*
-               Jetpack Navigation автоматически извлекает переданные параметры.
-               С помощью функции toRoute() мы получаем готовый объект MatchDetailsRoute
-               и можем безопасно достать из него matchId без использования ручных Bundle и String-ключей.
-            */
-            val route: MatchDetailsRoute = backStackEntry.toRoute()
+        composable<DetailMatchRoute> { backStackEntry ->
+            val route: DetailMatchRoute = backStackEntry.toRoute()
 
-            MatchDetailsScreen(
+            DetailMatchScreen(
                 matchId = route.matchId,
-                onEvent = { event ->
-                    when (event) {
-                        // Если на экране деталей нажали кнопку "Назад"
-                        is MatchDetailsUiEvent.OnBackClick -> {
+                onAction = { action ->
+                    when (action) {
+                        is DetailMatchAction.CloseScreen -> {
                             navController.popBackStack()
                         }
                     }
                 }
             )
         }
-
-
     }
 }
+
+@Composable
+fun ListMatchScreen(onAction: (ListMatchAction) -> Unit) {}
+
+@Composable
+fun DetailMatchScreen(matchId: Int, onAction: (DetailMatchAction) -> Unit) {}
 
 
