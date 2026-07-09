@@ -7,20 +7,23 @@ import com.example.matchcast.domain.model.Match
 import com.example.matchcast.domain.repository.MatchRepository
 import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchAction
 import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchEvent
-import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchViewState
+import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListMatchViewModel(
+@HiltViewModel
+class ListMatchViewModel @Inject constructor(
     val repository: MatchRepository
 ): ViewModel() {
 
     private var allMatches: List<Match> = emptyList()
 
-    private val _viewState = MutableStateFlow<ListMatchViewState>(ListMatchViewState.Loading)
+    private val _viewState = MutableStateFlow<ListMatchState>(ListMatchState.Loading)
     val viewState = _viewState.asStateFlow()
 
     private val actionsChannel = Channel<ListMatchAction>(capacity = Channel.CONFLATED)
@@ -28,21 +31,21 @@ class ListMatchViewModel(
 
     fun obtainEvent(event: ListMatchEvent) {
         when (val state = _viewState.value) {
-            is ListMatchViewState.Loading -> reduce(state,event)
-            is ListMatchViewState.Display ->reduce(state,event)
-            is ListMatchViewState.Error -> reduce(state,event)
-            is ListMatchViewState.Search -> reduce(state,event)
+            is ListMatchState.Loading -> reduce(state,event)
+            is ListMatchState.Display ->reduce(state,event)
+            is ListMatchState.Error -> reduce(state,event)
+            is ListMatchState.Search -> reduce(state,event)
         }
     }
 
-    private fun reduce(state: ListMatchViewState.Loading, event: ListMatchEvent) {
+    private fun reduce(state: ListMatchState.Loading, event: ListMatchEvent) {
         when(event){
             is ListMatchEvent.EnterScreen -> loadData()
             else -> {}
         }
     }
 
-    private fun reduce(state: ListMatchViewState.Display,event: ListMatchEvent){
+    private fun reduce(state: ListMatchState.Display, event: ListMatchEvent){
         when(event){
             is ListMatchEvent.OnMatchClick ->{
                 sideEffect(ListMatchAction.NavigateToDetail(event.matchId))
@@ -52,17 +55,17 @@ class ListMatchViewModel(
         }
     }
 
-    private fun reduce(state: ListMatchViewState.Search, event: ListMatchEvent){
+    private fun reduce(state: ListMatchState.Search, event: ListMatchEvent){
         when(event){
             is ListMatchEvent.SearchQueryChanged -> search(event.query)
             is ListMatchEvent.SearchClear -> {
-                _viewState.value = ListMatchViewState.Display(allMatches)
+                _viewState.value = ListMatchState.Display(allMatches)
             }
             is ListMatchEvent.OnMatchClick -> sideEffect(ListMatchAction.NavigateToDetail(event.matchId))
             else -> {}
         }
     }
-    private fun reduce(state: ListMatchViewState.Error, event: ListMatchEvent){
+    private fun reduce(state: ListMatchState.Error, event: ListMatchEvent){
         when(event){
             is ListMatchEvent.ReloadScreen -> loadData()
             else -> {}
@@ -76,17 +79,17 @@ class ListMatchViewModel(
                     allMatches = matches
                     val currentState = _viewState.value
                     _viewState.value = when (currentState) {
-                        is ListMatchViewState.Search -> {
+                        is ListMatchState.Search -> {
                             currentState.copy(
                                 results = filterMatches(currentState.query, matches),
                                 isLoading = false
                             )
                         }
-                        else -> ListMatchViewState.Display(allMatches)
+                        else -> ListMatchState.Display(allMatches)
                     }
                 }
             } catch (e: Exception) {
-                _viewState.value = ListMatchViewState.Error(
+                _viewState.value = ListMatchState.Error(
                     icon = R.drawable.error_svgrepo_com,
                     description = e.message ?: "Ошибка"
                 )
@@ -100,18 +103,18 @@ class ListMatchViewModel(
 
     private fun search(query: String){
         if (query.isBlank()) {
-            _viewState.value = ListMatchViewState.Display(allMatches)
+            _viewState.value = ListMatchState.Display(allMatches)
             return
         }
 
         viewModelScope.launch {
-            _viewState.value = ListMatchViewState.Search(
+            _viewState.value = ListMatchState.Search(
                 query = query,
                 results = emptyList(),
                 isLoading = true
             )
             val filtered = filterMatches(query,allMatches)
-            _viewState.value = ListMatchViewState.Search(
+            _viewState.value = ListMatchState.Search(
                 query = query,
                 results = filtered,
                 isLoading = false

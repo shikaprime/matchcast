@@ -2,15 +2,15 @@ package com.example.matchcast.presentaion.screens.detail.states
 
 import com.example.matchcast.domain.model.Match
 
-sealed class DetailMatchViewState{
-    data object Loading: DetailMatchViewState()
+sealed class DetailMatchState{
+    data object Loading: DetailMatchState()
 
     data class Error(
         val icon: Int,
         val description: String
-    ): DetailMatchViewState()
+    ): DetailMatchState()
 
     data class Display(
         val match: Match
-    ): DetailMatchViewState()
+    ): DetailMatchState()
 }

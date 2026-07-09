@@ -11,9 +11,11 @@ import kotlinx.coroutines.flow.map
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class MatchRepositoryImpl(
+@Singleton
+class MatchRepositoryImpl @Inject constructor(
     private val matchDao: MatchDao
 ): MatchRepository {
 

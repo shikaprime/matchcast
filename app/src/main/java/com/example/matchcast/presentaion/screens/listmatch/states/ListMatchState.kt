@@ -1,25 +1,24 @@
 package com.example.matchcast.presentaion.screens.listmatch.states
 
-import androidx.room.Query
 import com.example.matchcast.domain.model.Match
 
-sealed class ListMatchViewState{
+sealed class ListMatchState{
 
-    data object Loading: ListMatchViewState()
+    data object Loading: ListMatchState()
 
     data class Error(
         val icon: Int,
         val description: String
-    ): ListMatchViewState()
+    ): ListMatchState()
 
     data class Display(
         val listMatch: List<Match> = emptyList()
-    ): ListMatchViewState()
+    ): ListMatchState()
 
     data class Search(
         val query: String,
         val results: List<Match>,
         val isLoading: Boolean = false,
         val error: String? = null
-    ): ListMatchViewState()
+    ): ListMatchState()
 }
