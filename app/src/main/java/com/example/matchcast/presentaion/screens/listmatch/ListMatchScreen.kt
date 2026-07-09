@@ -25,10 +25,10 @@ import com.example.matchcast.presentaion.theme.components.MatchSearchbar
 fun ListMatchScreen(
     onAction: (ListMatchAction) -> Unit,
     viewModel: ListMatchViewModel = hiltViewModel()
-){
+) {
     LaunchedEffect(Unit) {
-        viewModel.viewAction.collect {
-            action -> onAction(action)
+        viewModel.viewAction.collect { action ->
+            onAction(action)
         }
     }
 
@@ -38,65 +38,5 @@ fun ListMatchScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize()
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            if (viewState is ListMatchState.Display || viewState is ListMatchState.Search){
-                val currentQuery = (viewState as? ListMatchState.Search)?.query ?: ""
 
-                MatchSearchbar(
-                    query = currentQuery,
-                    onQueryChanged = {
-                        text -> viewModel.obtainEvent(ListMatchEvent.SearchQueryChanged(text))
-                    },
-                    onClearPressed = {
-                        viewModel.obtainEvent(ListMatchEvent.SearchClear)
-                    }
-                )
-            }
-            when(val state = viewState){
-                is ListMatchState.Loading -> {
-                    FullScreenLoading()
-                }
-
-                is ListMatchState.Display -> {
-                    MatchList(
-                        matches = state.listMatch,
-                        onMatchClick = {
-                            matchId -> viewModel.obtainEvent(event = ListMatchEvent.OnMatchClick(matchId))
-                        }
-                    )
-                }
-
-                is ListMatchState.Error -> {
-                    FullScreenError(
-                        iconRes = state.icon,
-                        message = state.description,
-                        onRetry = { viewModel.obtainEvent(ListMatchEvent.ReloadScreen) }
-                    )
-                }
-
-                is ListMatchState.Search -> {
-                    if(state.isLoading){
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ){
-                            CircularProgressIndicator()
-                        }
-                    }else{
-                        MatchList(
-                          matches = state.results,
-                            onMatchClick = { matchId -> viewModel.obtainEvent(ListMatchEvent.OnMatchClick(matchId))}
-                        )
-                    }
-                }
-            }
-        }
-    }
 }
