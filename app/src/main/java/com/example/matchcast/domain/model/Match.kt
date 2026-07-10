@@ -10,5 +10,7 @@ data class Match (
     val group: String?,
     val homeTeamScore: Int,
     val awayTeamScore: Int,
-    val winner: String
+    val winner: String,
+    val homeTeamForm: List<MatchOutcome> = emptyList(),
+    val awayTeamForm: List<MatchOutcome> = emptyList()
 )

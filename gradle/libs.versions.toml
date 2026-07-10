@@ -1,9 +1,12 @@
 [versions]
 agp = "9.2.1"
+coilNetworkOkhttp = "3.3.0"
+coilCompose = "3.3.0"
 converterGson = "3.0.0"
 coreKtx = "1.19.0"
 desugar_jdk_libs = "2.1.5"
 desugar_jdk_libsVersion = "2.0.4"
+fluentSystemIcons = "1.1.204"
 hiltAndroid = "2.60.1"
 hiltCompiler = "2.60.1"
 hiltNavigationCompose = "1.4.0"
@@ -30,9 +33,12 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 desugar_jdk_libs-v204 = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libsVersion" }
+fluent-system-icons = { module = "com.microsoft.design:fluent-system-icons", version.ref = "fluentSystemIcons" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

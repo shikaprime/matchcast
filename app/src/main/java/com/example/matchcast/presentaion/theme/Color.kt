@@ -2,10 +2,16 @@ package com.example.matchcast.presentaion.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val EplPurple = Color(0xFF3D015A)
+val EplDarkPurple = Color(0xFF240036)
+val EplNeonGreen = Color(0xFF00FF87)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val BackgroundLight = Color(0xFFF4F3F6)
+val SurfaceWhite = Color(0xFFFFFFFF)
+
+val TextPrimary = Color(0xFF0B0410)
+val TextSecondary = Color(0xFF8E8E93)
+
+val FormWin = Color(0xFF00A852)
+val FormDraw = Color(0xFF8E8E93)
+val FormLoss = Color(0xFFD71920)

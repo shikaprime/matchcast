@@ -3,7 +3,9 @@ package com.example.matchcast.presentaion.screens.detail
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.matchcast.presentaion.screens.detail.states.DetailMatchAction
 import com.example.matchcast.presentaion.screens.detail.states.DetailMatchEvent
 
@@ -15,8 +17,8 @@ fun DetailMatchState(
     viewModel: DetailMatchModel = hiltViewModel()
 ){
 
-    //val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    
     LaunchedEffect(Unit) {
         viewModel.viewAction.collect {
             action -> onAction(action)
@@ -26,6 +28,5 @@ fun DetailMatchState(
     LaunchedEffect(matchId) {
         viewModel.obtainEvent(DetailMatchEvent.EnterScreen(matchId))
     }
-
 
 }
