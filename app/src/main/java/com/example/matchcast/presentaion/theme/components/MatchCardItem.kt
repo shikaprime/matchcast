@@ -49,7 +49,7 @@ fun MatchCardItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 80.dp) //8
+            .padding(horizontal = 16.dp, vertical = 8.dp) //8
             .advancedShadow(Color.Black, alpha = 0.15f, 8.dp, 4.dp, 4.dp)
             .background(
                 shape = RoundedCornerShape(16.dp),
@@ -168,7 +168,7 @@ fun MatchCardItem(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_fluent_location_24_regular),
                         contentDescription = "location",
-                        modifier = Modifier.size(10.dp),
+                        modifier = Modifier.size(12.dp),
                     )
                     Text(
                         text = match.location,
