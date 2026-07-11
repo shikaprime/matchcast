@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -77,4 +78,11 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.fluent.system.icons)
+
+    implementation(libs.androidx.compose.ui.text.google.fonts)
+
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    implementation("io.coil-kt:coil-svg:2.7.0")
+
 }

@@ -1,5 +1,6 @@
 package com.example.matchcast.presentaion.theme
 
+
 import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
@@ -18,10 +19,11 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = TextPrimary,
     onBackground = TextPrimary,
     onSurface = TextPrimary,
-    surfaceVariant = BackgroundLight,
-    onSurfaceVariant = TextSecondary
-)
 
+    surfaceVariant = SurfaceWhite,
+    onSurfaceVariant = TextSecondary,
+    outline = TextMuted,
+)
 @Composable
 fun MatchCastTheme(
     content: @Composable () -> Unit

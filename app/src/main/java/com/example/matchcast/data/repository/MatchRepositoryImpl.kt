@@ -69,7 +69,7 @@ class MatchRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun MatchEntity.toDomain(formMap: Map<String, List<MatchOutcome>>): Match {
+    private fun MatchEntity.toDomain(formMap: Map<String, ArrayDeque<MatchOutcome>>): Match {
         val formattedDate = try {
             val utcDateTime = ZonedDateTime.parse(this.dateUtc)
             val localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault())
@@ -89,8 +89,8 @@ class MatchRepositoryImpl @Inject constructor(
             homeTeamScore = this.homeTeamScore,
             awayTeamScore = this.awayTeamScore,
             winner = this.winner,
-            homeTeamForm = formMap[this.homeTeam] ?: emptyList(),
-            awayTeamForm = formMap[this.awayTeam] ?: emptyList()
+            homeTeamForm = formMap[this.homeTeam],
+            awayTeamForm = formMap[this.awayTeam]
         )
     }
 

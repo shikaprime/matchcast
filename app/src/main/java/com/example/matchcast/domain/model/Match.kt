@@ -11,6 +11,6 @@ data class Match (
     val homeTeamScore: Int,
     val awayTeamScore: Int,
     val winner: String,
-    val homeTeamForm: List<MatchOutcome> = emptyList(),
-    val awayTeamForm: List<MatchOutcome> = emptyList()
+    val homeTeamForm: ArrayDeque<MatchOutcome>?,
+    val awayTeamForm: ArrayDeque<MatchOutcome>?
 )
