@@ -3,12 +3,10 @@ package com.example.matchcast.presentaion.theme.components
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.example.matchcast.domain.model.Match
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.matchcast.domain.model.MatchOutcome
 
 @Composable
 fun MatchList(

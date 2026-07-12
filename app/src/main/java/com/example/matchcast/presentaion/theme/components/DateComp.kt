@@ -25,8 +25,7 @@ fun DateComp(
 ){
     val dateParts = date.split(" ")
     val formattedDate = formSimpleDate(dateParts.first())
-    var match: String = ""
-    match = when(count){
+    val match: String = when(count){
         1 -> "матч"
         2,3,4 -> "матча"
         else -> "матчей"
