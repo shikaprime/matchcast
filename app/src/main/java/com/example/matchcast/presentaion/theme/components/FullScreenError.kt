@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.matchcast.R
 import com.example.matchcast.presentaion.theme.MatchCastTheme
 
@@ -38,15 +40,16 @@ fun FullScreenError(
         Image(
             painter = painterResource(iconRes),
             contentDescription = "",
-            modifier = Modifier.size(64.dp),
+            modifier = Modifier.size(70.dp),
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = message,
             style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            fontSize = 20.sp
 
         )
 
@@ -56,7 +59,8 @@ fun FullScreenError(
             onClick = onRetry,
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
-            )
+            ),
+            modifier = Modifier.height(45.dp).width(280.dp)
         ) {
             Text(
                 text = "Повторить попытку",

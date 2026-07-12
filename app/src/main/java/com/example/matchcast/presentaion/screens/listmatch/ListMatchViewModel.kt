@@ -129,4 +129,6 @@ class ListMatchViewModel @Inject constructor(
                     match.awayTeam.contains(query, ignoreCase = true)
         }
     }
+
+
 }

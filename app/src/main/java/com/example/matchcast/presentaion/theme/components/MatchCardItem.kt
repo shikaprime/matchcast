@@ -84,7 +84,7 @@ fun MatchCardItem(
                             .width(60.dp)
                             .background(
                                 shape = RoundedCornerShape(6.dp),
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = MaterialTheme.colorScheme.onBackground.copy(0.9f)
                             ),
                         contentAlignment = Alignment.Center
                     ) {
@@ -98,13 +98,13 @@ fun MatchCardItem(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = formattedDate,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = TextMuted
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Normal),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
                 Text(
                     text = "Матч №${match.matchNumber}",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Normal),
                     color = TextMuted
                 )
             }

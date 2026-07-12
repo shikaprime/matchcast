@@ -16,7 +16,7 @@ fun MatchList(
     onMatchClick: (Int)-> Unit,
     modifier: Modifier = Modifier
 ){
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = Modifier) {
         items(matches) { match ->
             MatchCardItem(
                 match = match,
