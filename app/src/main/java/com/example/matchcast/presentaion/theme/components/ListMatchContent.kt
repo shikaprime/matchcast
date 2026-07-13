@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.matchcast.domain.model.Match
+import com.example.matchcast.presentaion.theme.BackgroundLight
 
 @Composable
 fun ListMatchContent(
@@ -39,7 +40,7 @@ fun ListMatchContent(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = MaterialTheme.colorScheme.onBackground
+                color = BackgroundLight
             )
     ) {
         EplHeader {

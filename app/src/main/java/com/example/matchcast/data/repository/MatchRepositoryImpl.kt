@@ -8,6 +8,7 @@ import com.example.matchcast.domain.model.MatchOutcome
 import com.example.matchcast.domain.repository.MatchRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -64,11 +65,14 @@ class MatchRepositoryImpl @Inject constructor(
     }
 
     override fun getMatch(id: Int): Flow<Match> {
-        return matchDao.getMatch(id).map { entity ->
-            entity.toDomain(emptyMap())
+        return combine(
+            matchDao.getMatch(id),
+            matchDao.getMatches()
+        ) { entity, allEntities ->
+            val totalFormMap = calculateTeamMatch(allEntities)
+            entity.toDomain(totalFormMap)
         }
     }
-
     private fun MatchEntity.toDomain(formMap: Map<String, ArrayDeque<MatchOutcome>>): Match {
         val formattedDate = try {
             val utcDateTime = ZonedDateTime.parse(this.dateUtc)

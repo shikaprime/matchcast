@@ -74,7 +74,7 @@ fun MatchCardItem(
             ) {
                 val dateParts = match.formateDateUtc.split(" ")
                 val formattedDate = formatSimpleDate(dateParts.first())
-                val time = dateParts.lastOrNull() ?: ""
+                val time = dateParts.lastOrNull()?.take(5) ?: ""
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -189,7 +189,7 @@ fun MatchCardItem(
 
 fun formatSimpleDate(dateString: String): String {
     return try {
-        val parsedDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        val parsedDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         parsedDate.format(DateTimeFormatter.ofPattern("dd MMM", Locale("ru")))
     } catch (e: Exception) {
         dateString

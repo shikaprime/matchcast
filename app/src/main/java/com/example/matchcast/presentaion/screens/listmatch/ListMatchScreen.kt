@@ -30,17 +30,12 @@ fun ListMatchScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
-    when(val state = viewState){
+    when(val state = viewState) {
         is ListMatchState.Loading -> FullScreenLoading()
-
         is ListMatchState.Error -> FullScreenError(
             iconRes = state.icon,
             message = state.description,
-            onRetry = {
-                viewModel.obtainEvent(ListMatchEvent.ReloadScreen)
-            }
         )
-
         is ListMatchState.Display -> ListMatchContent(
             listMatches = state.listMatch,
             searchQuery = "",
@@ -48,14 +43,17 @@ fun ListMatchScreen(
             onSearchClick = {
                 viewModel.obtainEvent(event = ListMatchEvent.SearchQueryChanged(""))
             },
-            onSearchQueryChange = {},
-            onCloseSearch = {},
+            onSearchQueryChange = { newQuery ->
+                viewModel.obtainEvent(ListMatchEvent.SearchQueryChanged(newQuery))
+            },
+            onCloseSearch = {
+                viewModel.obtainEvent(ListMatchEvent.SearchClear)
+            },
             onMatchClick = { matchId ->
                 viewModel.obtainEvent(event = ListMatchEvent.OnMatchClick(matchId))
             },
             modifier = Modifier
         )
-
         is ListMatchState.Search -> ListMatchContent(
             listMatches = state.results,
             searchQuery = state.query,

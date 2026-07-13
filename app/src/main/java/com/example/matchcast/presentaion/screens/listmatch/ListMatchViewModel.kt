@@ -1,5 +1,6 @@
 package com.example.matchcast.presentaion.screens.listmatch
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.matchcast.R
@@ -94,6 +95,7 @@ class ListMatchViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
+                Log.e("ListMatchVM", "Ошибка загрузки матчей", e)
                 _viewState.value = ListMatchState.Error(
                     icon = R.drawable.error_svgrepo_com,
                     description = e.message ?: "Ошибка"

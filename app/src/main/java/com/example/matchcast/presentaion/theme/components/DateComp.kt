@@ -63,7 +63,7 @@ fun UseDateComp(){
 
 fun formSimpleDate(dateString: String): String {
     return try {
-        val parsedDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        val parsedDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("ru")))
     } catch (e: Exception) {
         dateString

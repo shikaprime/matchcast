@@ -37,7 +37,7 @@ fun MatchHeader(
 ) {
     val dateParts = match.formateDateUtc.split(" ")
     val formattedDate = formSimpleDate(dateParts.first())
-    val time = dateParts.lastOrNull() ?: ""
+    val time = dateParts.lastOrNull()?.take(5) ?: ""
     Column(
         modifier = modifier
             .fillMaxWidth()

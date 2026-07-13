@@ -46,7 +46,7 @@ fun DetailMatchScreen(
             onRetry = {
                 viewModel.obtainEvent(event = DetailMatchEvent.ReloadScreen)
             },
-            message = state.description
+            message = "Ошибка"
         )
     }
 }
