@@ -9,6 +9,7 @@ import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchActio
 import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchEvent
 import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,10 +19,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListMatchViewModel @Inject constructor(
-    val repository: MatchRepository
+    private val repository: MatchRepository
 ): ViewModel() {
 
     private var allMatches: List<Match> = emptyList()
+    private var loadDataJob: Job? = null
 
     private val _viewState = MutableStateFlow<ListMatchState>(ListMatchState.Loading)
     val viewState = _viewState.asStateFlow()
@@ -31,10 +33,10 @@ class ListMatchViewModel @Inject constructor(
 
     fun obtainEvent(event: ListMatchEvent) {
         when (val state = _viewState.value) {
-            is ListMatchState.Loading -> reduce(state,event)
-            is ListMatchState.Display ->reduce(state,event)
-            is ListMatchState.Error -> reduce(state,event)
-            is ListMatchState.Search -> reduce(state,event)
+            is ListMatchState.Loading -> reduce(state, event)
+            is ListMatchState.Display -> reduce(state, event)
+            is ListMatchState.Error -> reduce(state, event)
+            is ListMatchState.Search -> reduce(state, event)
         }
     }
 
@@ -47,7 +49,7 @@ class ListMatchViewModel @Inject constructor(
 
     private fun reduce(state: ListMatchState.Display, event: ListMatchEvent){
         when(event){
-            is ListMatchEvent.OnMatchClick ->{
+            is ListMatchEvent.OnMatchClick -> {
                 sideEffect(ListMatchAction.NavigateToDetail(event.matchId))
             }
             is ListMatchEvent.SearchQueryChanged -> search(event.query)
@@ -65,14 +67,17 @@ class ListMatchViewModel @Inject constructor(
             else -> {}
         }
     }
+
     private fun reduce(state: ListMatchState.Error, event: ListMatchEvent){
         when(event){
             is ListMatchEvent.ReloadScreen -> loadData()
             else -> {}
         }
     }
+
     private fun loadData() {
-        viewModelScope.launch {
+        loadDataJob?.cancel()
+        loadDataJob = viewModelScope.launch {
             try {
                 repository.refreshMatch()
                 repository.getMatches().collect { matches: List<Match> ->
@@ -102,24 +107,12 @@ class ListMatchViewModel @Inject constructor(
     }
 
     private fun search(query: String){
-        if (query.isBlank()) {
-            _viewState.value = ListMatchState.Display(allMatches)
-            return
-        }
-
-        viewModelScope.launch {
-            _viewState.value = ListMatchState.Search(
-                query = query,
-                results = emptyList(),
-                isLoading = true
-            )
-            val filtered = filterMatches(query,allMatches)
-            _viewState.value = ListMatchState.Search(
-                query = query,
-                results = filtered,
-                isLoading = false
-            )
-        }
+        val filtered = filterMatches(query, allMatches)
+        _viewState.value = ListMatchState.Search(
+            query = query,
+            results = filtered,
+            isLoading = false
+        )
     }
 
     private fun filterMatches(query: String, matches: List<Match>): List<Match> {
@@ -129,6 +122,4 @@ class ListMatchViewModel @Inject constructor(
                     match.awayTeam.contains(query, ignoreCase = true)
         }
     }
-
-
 }

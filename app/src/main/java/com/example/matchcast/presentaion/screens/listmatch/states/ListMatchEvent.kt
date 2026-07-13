@@ -7,7 +7,7 @@ sealed class ListMatchEvent{
 
     data class SearchQueryChanged(val query: String) : ListMatchEvent()
 
-    object SearchClear : ListMatchEvent()
+    data object SearchClear : ListMatchEvent()
 
     data class OnMatchClick(
         val matchId: Int

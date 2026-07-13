@@ -49,7 +49,7 @@ fun MatchCardItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp) //8
+            .padding(horizontal = 16.dp, vertical = 8.dp)
             .advancedShadow(Color.Black, alpha = 0.15f, 8.dp, 4.dp, 4.dp)
             .background(
                 shape = RoundedCornerShape(16.dp),
@@ -198,7 +198,6 @@ fun formatSimpleDate(dateString: String): String {
 
 
 
-// ИСПРАВЛЕН ПРЕВЬЮЕР
 @Preview(showBackground = true)
 @Composable
 fun UseMatchCardItem() {
