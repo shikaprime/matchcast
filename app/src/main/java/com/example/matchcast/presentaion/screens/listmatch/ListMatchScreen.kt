@@ -40,11 +40,13 @@ fun ListMatchScreen(
             }
         )
         is ListMatchState.Display -> ListMatchContent(
-            listMatches = state.listMatch,
-            searchQuery = "",
-            isSearchActive = false,
+            listMatches = state.matches,
+            searchQuery = state.searchQuery,
+            isSearchActive = state.isSearchActive,
+            availableFilters = state.availableFilters,
+            activeFilters = state.activeFilters,
             onSearchClick = {
-                viewModel.obtainEvent(event = ListMatchEvent.SearchQueryChanged(""))
+                viewModel.obtainEvent(ListMatchEvent.SearchActivate)
             },
             onSearchQueryChange = { newQuery ->
                 viewModel.obtainEvent(ListMatchEvent.SearchQueryChanged(newQuery))
@@ -52,24 +54,14 @@ fun ListMatchScreen(
             onCloseSearch = {
                 viewModel.obtainEvent(ListMatchEvent.SearchClear)
             },
-            onMatchClick = { matchId ->
-                viewModel.obtainEvent(event = ListMatchEvent.OnMatchClick(matchId))
+            onFilterOptionSelected = { filterType, value ->
+                viewModel.obtainEvent(ListMatchEvent.FilterOptionSelected(filterType, value))
             },
-            modifier = Modifier
-        )
-        is ListMatchState.Search -> ListMatchContent(
-            listMatches = state.results,
-            searchQuery = state.query,
-            isSearchActive = true,
-            onSearchClick = {},
-            onSearchQueryChange = { newQuery ->
-                viewModel.obtainEvent(ListMatchEvent.SearchQueryChanged(newQuery))
-            },
-            onCloseSearch = {
-                viewModel.obtainEvent(ListMatchEvent.SearchClear)
+            onClearFilters = {
+                viewModel.obtainEvent(ListMatchEvent.ClearFilters)
             },
             onMatchClick = { matchId ->
-                viewModel.obtainEvent(event = ListMatchEvent.OnMatchClick(matchId))
+                viewModel.obtainEvent(ListMatchEvent.OnMatchClick(matchId))
             },
             modifier = Modifier
         )

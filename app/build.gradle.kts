@@ -90,4 +90,7 @@ dependencies {
 
     testImplementation(libs.mockk)
 
+    testImplementation(libs.mockk.v11312)
+    testImplementation(libs.kotlinx.coroutines.test.v181)
+
 }

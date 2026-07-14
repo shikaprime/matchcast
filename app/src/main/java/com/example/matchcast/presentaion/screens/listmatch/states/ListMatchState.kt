@@ -2,23 +2,20 @@ package com.example.matchcast.presentaion.screens.listmatch.states
 
 import com.example.matchcast.domain.model.Match
 
-sealed class ListMatchState{
+sealed class ListMatchState {
 
-    data object Loading: ListMatchState()
+    data object Loading : ListMatchState()
 
     data class Error(
         val icon: Int,
         val description: String
-    ): ListMatchState()
+    ) : ListMatchState()
 
     data class Display(
-        val listMatch: List<Match> = emptyList()
-    ): ListMatchState()
-
-    data class Search(
-        val query: String,
-        val results: List<Match>,
-        val isLoading: Boolean = false,
-        val error: String? = null
-    ): ListMatchState()
+        val matches: List<Match> = emptyList(),
+        val searchQuery: String = "",
+        val isSearchActive: Boolean = false,
+        val availableFilters: Map<FilterType, List<String>> = emptyMap(),
+        val activeFilters: Map<FilterType, String> = emptyMap()
+    ) : ListMatchState()
 }
