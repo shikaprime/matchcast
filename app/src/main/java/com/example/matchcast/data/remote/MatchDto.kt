@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class MatchDto(
     @SerializedName("MatchNumber") val matchNumber: Int,
     @SerializedName("RoundNumber") val roundNumber: Int,
-    @SerializedName("DateUtc") val dataUtc: String,
+    @SerializedName("DateUtc") val dateUtc: String,
     @SerializedName("Location") val location: String,
     @SerializedName("HomeTeam") val homeTeam: String,
     @SerializedName("AwayTeam") val awayTeam: String,

@@ -1,5 +1,6 @@
 package com.example.matchcast.presentaion.theme.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
 import com.example.matchcast.data.repository.teamLogoDrawableMap
 import com.example.matchcast.domain.model.Match
 import com.example.matchcast.presentaion.theme.MatchCastTheme
+import com.example.matchcast.presentaion.theme.utils.formatFullDate
 import com.microsoft.fluent.mobile.icons.R
 
 @Composable
@@ -35,8 +36,8 @@ fun MatchHeader(
     onBackClick: () -> Unit = {},
     match: Match,
 ) {
-    val dateParts = match.formateDateUtc.split(" ")
-    val formattedDate = formSimpleDate(dateParts.first())
+    val dateParts = match.formattedDateUtc.split(" ")
+    val formattedDate = formatFullDate(dateParts.first())
     val time = dateParts.lastOrNull()?.take(5) ?: ""
     Column(
         modifier = modifier
@@ -44,8 +45,7 @@ fun MatchHeader(
             .background(color = MaterialTheme.colorScheme.primary)
             .statusBarsPadding()
             .padding(horizontal = 16.dp, vertical = 20.dp),
-
-    ){
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -57,7 +57,6 @@ fun MatchHeader(
                 fontSize = 13.sp,
                 fontWeight = FontWeight.ExtraBold,
                 letterSpacing = 1.sp
-
             )
         }
         Spacer(modifier = Modifier.height(32.dp))
@@ -78,7 +77,10 @@ fun MatchHeader(
             ) {
                 Text(
                     text = formattedDate.uppercase(),
-                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.ExtraBold, fontSize = 16.sp),
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 16.sp
+                    ),
                     color = MaterialTheme.colorScheme.secondary
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -117,11 +119,13 @@ fun MatchHeader(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                AsyncImage(
-                    model = teamLogoDrawableMap[match.homeTeam],
-                    contentDescription = "${match.homeTeam} logo",
-                    modifier = Modifier.size(70.dp)
-                )
+                teamLogoDrawableMap[match.homeTeam]?.let { drawableId ->
+                    Image(
+                        painter = painterResource(drawableId),
+                        contentDescription = "${match.homeTeam} logo",
+                        modifier = Modifier.size(70.dp)
+                    )
+                }
                 Text(
                     text = match.homeTeam,
                     style = MaterialTheme.typography.titleMedium,
@@ -140,11 +144,13 @@ fun MatchHeader(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                AsyncImage(
-                    model = teamLogoDrawableMap[match.awayTeam],
-                    contentDescription = "${match.awayTeam} logo",
-                    modifier = Modifier.size(70.dp)
-                )
+                teamLogoDrawableMap[match.awayTeam]?.let { drawableId ->
+                    Image(
+                        painter = painterResource(drawableId),
+                        contentDescription = "${match.awayTeam} logo",
+                        modifier = Modifier.size(70.dp)
+                    )
+                }
                 Text(
                     text = match.awayTeam,
                     style = MaterialTheme.typography.titleMedium,
@@ -161,7 +167,7 @@ fun UseMatchHeaderPreview() {
     MatchCastTheme {
         MatchHeader(
             match = Match(
-                formateDateUtc = "11.08.2023 19:00",
+                formattedDateUtc = "11.08.2023 19:00",
                 homeTeam = "Arsenal",
                 awayTeam = "Man City",
                 homeTeamScore = 3,

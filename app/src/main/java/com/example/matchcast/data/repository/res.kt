@@ -20,7 +20,7 @@ val teamLogoDrawableMap = mapOf(
     "Newcastle" to R.drawable.new_castle,
     "Nottingham Forest" to R.drawable.nottingham_forest_fc,
     "Sheffield Utd" to R.drawable.shiffield,
-    "Spurs" to R.drawable.san_antonio_spurs_1,
+    "Spurs" to R.drawable.tottenham_hotspur,
     "West Ham" to R.drawable.west_ham,
     "Wolves" to R.drawable.wolves_sports
 )

@@ -15,7 +15,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.map
+
 
 @Singleton
 class MatchRepositoryImpl @Inject constructor(
@@ -25,11 +25,11 @@ class MatchRepositoryImpl @Inject constructor(
     override fun getMatches(): Flow<List<Match>> {
         return matchDao.getMatches().map { entities ->
             val totalFormMap = calculateTeamMatch(entities)
-            entities.map { it.toDomain(totalFormMap)
+            entities.map {
+                it.toDomain(totalFormMap)
             }
         }
     }
-
 
 
     override suspend fun refreshMatch() {
@@ -42,7 +42,7 @@ class MatchRepositoryImpl @Inject constructor(
                     MatchEntity(
                         matchNumber = it.matchNumber,
                         roundNumber = it.roundNumber,
-                        dateUtc = it.dataUtc,
+                        dateUtc = it.dateUtc,
                         location = it.location,
                         homeTeam = it.homeTeam,
                         awayTeam = it.awayTeam,
@@ -73,6 +73,7 @@ class MatchRepositoryImpl @Inject constructor(
             entity.toDomain(totalFormMap)
         }
     }
+
     private fun MatchEntity.toDomain(formMap: Map<String, ArrayDeque<MatchOutcome>>): Match {
         val formattedDate = try {
             val utcDateTime = ZonedDateTime.parse(this.dateUtc)
@@ -85,7 +86,7 @@ class MatchRepositoryImpl @Inject constructor(
         return Match(
             matchNumber = this.matchNumber,
             roundNumber = this.roundNumber,
-            formateDateUtc = formattedDate,
+            formattedDateUtc = formattedDate,
             location = this.location,
             homeTeam = this.homeTeam,
             awayTeam = this.awayTeam,
@@ -98,30 +99,32 @@ class MatchRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun calculateTeamMatch(matches :List<MatchEntity>): Map<String, ArrayDeque<MatchOutcome>>{
+    private fun calculateTeamMatch(matches: List<MatchEntity>): Map<String, ArrayDeque<MatchOutcome>> {
 
         val formMap = mutableMapOf<String, ArrayDeque<MatchOutcome>>()
 
-        for (match in matches){
-            val homeTeam = formMap.getOrPut(match.homeTeam){ ArrayDeque(5) }
-            if (homeTeam.size==5) homeTeam.removeFirst()
-            homeTeam.addLast(determineOutcome(match,true))
+        for (match in matches) {
+            val homeTeam = formMap.getOrPut(match.homeTeam) { ArrayDeque(5) }
+            if (homeTeam.size == 5) homeTeam.removeFirst()
+            homeTeam.addLast(determineOutcome(match, true))
 
-            val awayTeam = formMap.getOrPut(match.awayTeam){ ArrayDeque(5) }
-            if (awayTeam.size ==5 ) awayTeam.removeFirst()
-            awayTeam.addLast(determineOutcome(match,false))
+            val awayTeam = formMap.getOrPut(match.awayTeam) { ArrayDeque(5) }
+            if (awayTeam.size == 5) awayTeam.removeFirst()
+            awayTeam.addLast(determineOutcome(match, false))
         }
 
         return formMap
 
     }
 
-    private fun determineOutcome(match: MatchEntity,isHome: Boolean): MatchOutcome{
-        return when{
-            match.awayTeamScore==match.homeTeamScore -> MatchOutcome.DRAW
+    private fun determineOutcome(match: MatchEntity, isHome: Boolean): MatchOutcome {
+        return when {
+            match.awayTeamScore == match.homeTeamScore -> MatchOutcome.DRAW
             isHome && match.homeTeamScore > match.awayTeamScore -> MatchOutcome.WIN
             !isHome && match.awayTeamScore > match.homeTeamScore -> MatchOutcome.WIN
-            else -> { MatchOutcome.LOSE }
+            else -> {
+                MatchOutcome.LOSE
+            }
         }
     }
 }

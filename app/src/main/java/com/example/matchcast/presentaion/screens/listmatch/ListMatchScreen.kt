@@ -30,11 +30,14 @@ fun ListMatchScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
-    when(val state = viewState) {
+    when (val state = viewState) {
         is ListMatchState.Loading -> FullScreenLoading()
         is ListMatchState.Error -> FullScreenError(
             iconRes = state.icon,
             message = state.description,
+            onRetry = {
+                viewModel.obtainEvent(ListMatchEvent.ReloadScreen)
+            }
         )
         is ListMatchState.Display -> ListMatchContent(
             listMatches = state.listMatch,

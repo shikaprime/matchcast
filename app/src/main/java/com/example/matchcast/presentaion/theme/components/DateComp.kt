@@ -14,28 +14,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.matchcast.presentaion.theme.DividerGray
 import com.example.matchcast.presentaion.theme.MatchCastTheme
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import com.example.matchcast.presentaion.theme.utils.formatFullDate
 
 @Composable
 fun DateComp(
     date: String,
     count: Int
-){
-    val dateParts = date.split(" ")
-    val formattedDate = formSimpleDate(dateParts.first())
-    val match: String = when(count){
+) {
+    val formattedDate = formatFullDate(date)
+    val matchLabel = when (count) {
         1 -> "матч"
-        2,3,4 -> "матча"
+        2, 3, 4 -> "матча"
         else -> "матчей"
     }
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ){
-
+    ) {
         Text(
             text = formattedDate.uppercase(),
             style = MaterialTheme.typography.labelMedium,
@@ -43,7 +39,7 @@ fun DateComp(
         )
         HorizontalDivider(Modifier.weight(1f), thickness = 2.dp, color = DividerGray.copy(1.1f))
         Text(
-            text = "$count $match",
+            text = "$count $matchLabel",
             style = MaterialTheme.typography.labelMedium,
             color = Color.Gray
         )
@@ -52,20 +48,8 @@ fun DateComp(
 
 @Preview(showBackground = true)
 @Composable
-fun UseDateComp(){
+fun UseDateComp() {
     MatchCastTheme {
-        DateComp("11.08.2023 19:00",3)
-    }
-}
-
-
-
-
-fun formSimpleDate(dateString: String): String {
-    return try {
-        val parsedDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", Locale("ru")))
-    } catch (e: Exception) {
-        dateString
+        DateComp("11.08.2023", 3)
     }
 }

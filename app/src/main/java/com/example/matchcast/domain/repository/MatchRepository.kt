@@ -1,13 +1,11 @@
 package com.example.matchcast.domain.repository
 
-import com.example.matchcast.data.local.MatchEntity
 import com.example.matchcast.domain.model.Match
 import kotlinx.coroutines.flow.Flow
 
-
 interface MatchRepository {
 
-     fun getMatches(): Flow<List<Match>>
+    fun getMatches(): Flow<List<Match>>
 
     suspend fun refreshMatch()
 

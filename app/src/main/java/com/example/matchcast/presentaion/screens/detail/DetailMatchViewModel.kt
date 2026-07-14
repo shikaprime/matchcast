@@ -8,7 +8,7 @@ import com.example.matchcast.presentaion.screens.detail.states.DetailMatchAction
 import com.example.matchcast.presentaion.screens.detail.states.DetailMatchEvent
 import com.example.matchcast.presentaion.screens.detail.states.DetailMatchState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job // Импортируем Job
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,12 +17,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailMatchModel @Inject constructor(
+class DetailMatchViewModel @Inject constructor(
     private val repository: MatchRepository
 ) : ViewModel() {
 
     private var currentMatchId: Int = -1
-
     private var matchLoadingJob: Job? = null
 
     private val _viewState = MutableStateFlow<DetailMatchState>(DetailMatchState.Loading)
@@ -67,7 +66,6 @@ class DetailMatchModel @Inject constructor(
 
     private fun loadMatch(id: Int) {
         currentMatchId = id
-
         matchLoadingJob?.cancel()
 
         matchLoadingJob = viewModelScope.launch {

@@ -3,7 +3,7 @@ package com.example.matchcast.domain.model
 data class Match (
     val matchNumber: Int,
     val roundNumber: Int,
-    val formateDateUtc: String,
+    val formattedDateUtc: String,
     val location: String,
     val homeTeam: String,
     val awayTeam: String,

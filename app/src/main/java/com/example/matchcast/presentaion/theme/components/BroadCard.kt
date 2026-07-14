@@ -3,10 +3,12 @@ package com.example.matchcast.presentaion.theme.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -63,16 +65,23 @@ fun BroadCard(
                 modifier = Modifier.size(24.dp)
             )
         }
-
-        Row(
-            modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            ChannelChip(text = "DAZN")
-            ChannelChip(text = "Sky Sports")
-            ChannelChip(text = "Peacock")
-            ChannelChip(text = "Paramount+")
+            Text(
+                text = "Трансляция".uppercase(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ChannelChip(text = "DAZN")
+                ChannelChip(text = "Sky Sports")
+                ChannelChip(text = "Peacock")
+                ChannelChip(text = "Paramount+")
+            }
         }
     }
 }

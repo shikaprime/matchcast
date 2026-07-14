@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
-
     id("com.google.dagger.hilt.android")
 }
 
@@ -83,6 +82,12 @@ dependencies {
 
     implementation(libs.androidx.compose.material.icons.extended)
 
-    implementation("io.coil-kt:coil-svg:2.7.0")
+    implementation(libs.coil.svg)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    testImplementation(libs.turbine)
+
+    testImplementation(libs.mockk)
 
 }

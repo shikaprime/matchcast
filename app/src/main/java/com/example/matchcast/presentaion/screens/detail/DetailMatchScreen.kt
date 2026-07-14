@@ -1,6 +1,5 @@
 package com.example.matchcast.presentaion.screens.detail
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,19 +12,17 @@ import com.example.matchcast.presentaion.theme.components.DetailMatchContent
 import com.example.matchcast.presentaion.theme.components.FullScreenError
 import com.example.matchcast.presentaion.theme.components.FullScreenLoading
 
-
 @Composable
 fun DetailMatchScreen(
     matchId: Int,
     onAction: (DetailMatchAction) -> Unit,
-    viewModel: DetailMatchModel = hiltViewModel()
-){
-
+    viewModel: DetailMatchViewModel = hiltViewModel()
+) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-    
+
     LaunchedEffect(Unit) {
-        viewModel.viewAction.collect {
-            action -> onAction(action)
+        viewModel.viewAction.collect { action ->
+            onAction(action)
         }
     }
 
@@ -33,11 +30,11 @@ fun DetailMatchScreen(
         viewModel.obtainEvent(DetailMatchEvent.EnterScreen(matchId))
     }
 
-    when(val state = viewState){
+    when (val state = viewState) {
         is DetailMatchState.Loading -> FullScreenLoading()
         is DetailMatchState.Display -> DetailMatchContent(
-           match =  state.match,
-            onBackCLick = {
+            match = state.match,
+            onBackClick = {
                 viewModel.obtainEvent(event = DetailMatchEvent.OnBackClick)
             }
         )
@@ -46,7 +43,7 @@ fun DetailMatchScreen(
             onRetry = {
                 viewModel.obtainEvent(event = DetailMatchEvent.ReloadScreen)
             },
-            message = "Ошибка"
+            message = state.description
         )
     }
 }

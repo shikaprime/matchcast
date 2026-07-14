@@ -21,17 +21,17 @@ import com.example.matchcast.presentaion.theme.MatchCastTheme
 @Composable
 fun DetailMatchContent(
     match: Match,
-    onBackCLick: () -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.primary)
-    ){
+    ) {
         MatchHeader(
             match = match,
-            onBackClick = onBackCLick
+            onBackClick = onBackClick
         )
 
         Surface(
@@ -40,17 +40,16 @@ fun DetailMatchContent(
                 .weight(1f),
             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
             color = MaterialTheme.colorScheme.background
-        ){
+        ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
                 contentPadding = PaddingValues(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
-                    VenueCard(
-                        geo = match.location
-                    )
+                    VenueCard(geo = match.location)
                 }
                 item {
                     BroadCard()
@@ -96,7 +95,7 @@ fun DetailMatchContentPreview() {
         val previewMatch = Match(
             matchNumber = 380,
             roundNumber = 38,
-            formateDateUtc = "12.07.2026 16:30",
+            formattedDateUtc = "12.07.2026 16:30",
             location = "Emirates Stadium",
             homeTeam = "Arsenal",
             awayTeam = "Man City",
@@ -110,7 +109,7 @@ fun DetailMatchContentPreview() {
 
         DetailMatchContent(
             match = previewMatch,
-            onBackCLick = {}
+            onBackClick = {}
         )
     }
 }
