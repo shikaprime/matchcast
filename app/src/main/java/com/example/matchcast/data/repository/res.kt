@@ -24,3 +24,27 @@ val teamLogoDrawableMap = mapOf(
     "West Ham" to R.drawable.west_ham,
     "Wolves" to R.drawable.wolves_sports
 )
+
+/** Official club names for the short team names used throughout the API/UI. */
+val teamFullNameMap = mapOf(
+    "Arsenal" to "Arsenal FC",
+    "Aston Villa" to "Aston Villa FC",
+    "Bournemouth" to "AFC Bournemouth",
+    "Brentford" to "Brentford FC",
+    "Brighton" to "Brighton & Hove Albion FC",
+    "Burnley" to "Burnley FC",
+    "Chelsea" to "Chelsea FC",
+    "Crystal Palace" to "Crystal Palace FC",
+    "Everton" to "Everton FC",
+    "Fulham" to "Fulham FC",
+    "Liverpool" to "Liverpool FC",
+    "Luton" to "Luton Town FC",
+    "Man City" to "Manchester City FC",
+    "Man Utd" to "Manchester United FC",
+    "Newcastle" to "Newcastle United FC",
+    "Nottingham Forest" to "Nottingham Forest FC",
+    "Sheffield Utd" to "Sheffield United FC",
+    "Spurs" to "Tottenham Hotspur FC",
+    "West Ham" to "West Ham United FC",
+    "Wolves" to "Wolverhampton Wanderers FC"
+)

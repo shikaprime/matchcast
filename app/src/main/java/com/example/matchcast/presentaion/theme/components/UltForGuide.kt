@@ -52,7 +52,7 @@ fun UltFormGuide(
             Text(
                 text = homeTeam,
                 style = MaterialTheme.typography.labelSmall.copy(fontSize = 16.sp),
-                color = MaterialTheme.colorScheme.onSecondary
+                color = MaterialTheme.colorScheme.onSurface
             )
             FormGuide(
                 modifier = Modifier,
@@ -67,7 +67,7 @@ fun UltFormGuide(
             Text(
                 text = awayTeam,
                 style = MaterialTheme.typography.labelSmall.copy(fontSize = 16.sp),
-                color = MaterialTheme.colorScheme.onSecondary
+                color = MaterialTheme.colorScheme.onSurface
             )
             FormGuide(
                 modifier = Modifier,

@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import com.example.matchcast.data.repository.teamLogoDrawableMap
 import com.example.matchcast.domain.model.Match
 import com.example.matchcast.domain.model.MatchOutcome
-import com.example.matchcast.presentaion.theme.EplPurple
 import com.example.matchcast.presentaion.theme.MatchCastTheme
 import com.example.matchcast.presentaion.theme.utils.advancedShadow
 
@@ -102,7 +101,7 @@ fun MatchCardItem(
                     Text(
                         text = match.homeTeam,
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
                 Text(
@@ -110,7 +109,7 @@ fun MatchCardItem(
                     style = MaterialTheme.typography.labelMedium,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = EplPurple
+                    color = MaterialTheme.colorScheme.secondary
                 )
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -127,7 +126,7 @@ fun MatchCardItem(
                     Text(
                         text = match.awayTeam,
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }

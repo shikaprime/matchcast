@@ -34,7 +34,7 @@ fun BackButton(
         Icon(
             painter = painterResource(id = R.drawable.ic_fluent_arrow_left_24_regular),
             contentDescription = "back",
-            tint = MaterialTheme.colorScheme.surface,
+            tint = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.size(24.dp)
         )
     }

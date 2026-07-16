@@ -60,6 +60,7 @@ class DetailMatchViewModel @Inject constructor(
     private fun reduce(state: DetailMatchState.Display, event: DetailMatchEvent) {
         when (event) {
             is DetailMatchEvent.OnBackClick -> sideEffect(DetailMatchAction.CloseScreen)
+            is DetailMatchEvent.OnTeamClick -> sideEffect(DetailMatchAction.NavigateToTeam(event.teamName))
             else -> {}
         }
     }

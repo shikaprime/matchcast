@@ -2,6 +2,7 @@ package com.example.matchcast.presentaion.theme.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,7 @@ import com.microsoft.fluent.mobile.icons.R
 fun MatchHeader(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
+    onTeamClick: (String) -> Unit = {},
     match: Match,
 ) {
     val dateParts = match.formattedDateUtc.split(" ")
@@ -53,7 +55,7 @@ fun MatchHeader(
             BackButton(onClick = onBackClick)
             Text(
                 text = "Премьер Лига",
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.ExtraBold,
                 letterSpacing = 1.sp
@@ -102,7 +104,7 @@ fun MatchHeader(
                     )
                     Text(
                         text = time,
-                        color = MaterialTheme.colorScheme.surface,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp)
                     )
                 }
@@ -123,13 +125,16 @@ fun MatchHeader(
                     Image(
                         painter = painterResource(drawableId),
                         contentDescription = "${match.homeTeam} logo",
-                        modifier = Modifier.size(70.dp)
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clickable(onClick = { onTeamClick(match.homeTeam) })
                     )
                 }
                 Text(
                     text = match.homeTeam,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.clickable(onClick = { onTeamClick(match.homeTeam) })
                 )
             }
             Text(
@@ -137,7 +142,7 @@ fun MatchHeader(
                 style = MaterialTheme.typography.labelMedium,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.surface
+                color = MaterialTheme.colorScheme.onPrimary
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -148,13 +153,16 @@ fun MatchHeader(
                     Image(
                         painter = painterResource(drawableId),
                         contentDescription = "${match.awayTeam} logo",
-                        modifier = Modifier.size(70.dp)
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clickable(onClick = { onTeamClick(match.awayTeam) })
                     )
                 }
                 Text(
                     text = match.awayTeam,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.surface
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.clickable(onClick = { onTeamClick(match.awayTeam) })
                 )
             }
         }

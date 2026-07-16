@@ -7,4 +7,6 @@ sealed class DetailMatchEvent{
 
     data object OnBackClick: DetailMatchEvent()
 
+    data class OnTeamClick(val teamName: String): DetailMatchEvent()
+
 }

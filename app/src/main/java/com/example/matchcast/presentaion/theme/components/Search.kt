@@ -57,7 +57,7 @@ fun SearchButton(
             text = "Поиск матча",
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 14.sp,
-            color = Color.Gray
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

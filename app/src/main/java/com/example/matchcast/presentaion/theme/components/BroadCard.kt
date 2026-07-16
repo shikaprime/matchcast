@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.matchcast.presentaion.theme.MatchCastTheme
+import com.example.matchcast.presentaion.theme.TextPrimary
 import com.example.matchcast.presentaion.theme.utils.advancedShadow
 import com.microsoft.fluent.mobile.icons.R
 
@@ -95,7 +95,10 @@ private fun ChannelChip(
         modifier = modifier
             .background(
                 shape = RoundedCornerShape(6.dp),
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
+                // Fixed dark scrim (not colorScheme.onBackground) so it stays dark in
+                // both themes - it's paired with the fixed neon-green secondary text
+                // below, which needs a dark backdrop regardless of overall theme.
+                color = TextPrimary.copy(alpha = 0.9f)
             )
             .padding(horizontal = 10.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center

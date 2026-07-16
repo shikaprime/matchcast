@@ -63,6 +63,12 @@ fun ListMatchScreen(
             onMatchClick = { matchId ->
                 viewModel.obtainEvent(ListMatchEvent.OnMatchClick(matchId))
             },
+            onTeamClick = { teamName ->
+                viewModel.obtainEvent(ListMatchEvent.OnTeamClick(teamName))
+            },
+            onNavigateToStandings = {
+                viewModel.obtainEvent(ListMatchEvent.OnStandingsClick)
+            },
             modifier = Modifier
         )
     }

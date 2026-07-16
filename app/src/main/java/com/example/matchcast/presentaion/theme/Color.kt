@@ -13,10 +13,17 @@ val TextPrimary = Color(0xFF1A1A1A)
 val TextSecondary = Color(0xFF6B6B6B)
 val TextMuted = Color(0xFF9E9E9E)
 
+val BackgroundDark = Color(0xFF15121A)
+val SurfaceDark = Color(0xFF201C27)
+val SurfaceVariantDark = Color(0xFF2A2532)
+
+val TextPrimaryDark = Color(0xFFF2F0F3)
+val TextSecondaryDark = Color(0xFFC7C2CC)
+val TextMutedDark = Color(0xFF8A8590)
+
 val FormWin = Color(0xFF1B8A3E)
 val FormDraw = Color(0xFF9E9E9E)
 val FormLoss = Color(0xFFD32F2F)
 
-val DividerGray = Color(0xFFE0DCE2)
 val ProgressBarDraw = Color(0xFFD0CAD4)
 val H2hGuestWinText = Color(0xFF00B85E)

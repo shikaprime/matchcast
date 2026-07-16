@@ -36,6 +36,9 @@ fun DetailMatchScreen(
             match = state.match,
             onBackClick = {
                 viewModel.obtainEvent(event = DetailMatchEvent.OnBackClick)
+            },
+            onTeamClick = { teamName ->
+                viewModel.obtainEvent(event = DetailMatchEvent.OnTeamClick(teamName))
             }
         )
         is DetailMatchState.Error -> FullScreenError(

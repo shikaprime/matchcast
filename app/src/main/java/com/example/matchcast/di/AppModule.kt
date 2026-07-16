@@ -3,6 +3,7 @@ package com.example.matchcast.di
 import android.content.Context
 import com.example.matchcast.data.local.AppDatabase
 import com.example.matchcast.data.local.MatchDao
+import com.example.matchcast.data.local.StandingDao
 import com.example.matchcast.data.repository.MatchRepositoryImpl
 import com.example.matchcast.domain.repository.MatchRepository
 import dagger.Module
@@ -25,6 +26,11 @@ object AppModule {
     @Provides
     fun provideDao(database: AppDatabase): MatchDao{
         return database.matchDao()
+    }
+
+    @Provides
+    fun provideStandingDao(database: AppDatabase): StandingDao {
+        return database.standingDao()
     }
 
     @Provides

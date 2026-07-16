@@ -22,6 +22,7 @@ import com.example.matchcast.presentaion.theme.MatchCastTheme
 fun DetailMatchContent(
     match: Match,
     onBackClick: () -> Unit,
+    onTeamClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -31,7 +32,8 @@ fun DetailMatchContent(
     ) {
         MatchHeader(
             match = match,
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onTeamClick = onTeamClick
         )
 
         Surface(

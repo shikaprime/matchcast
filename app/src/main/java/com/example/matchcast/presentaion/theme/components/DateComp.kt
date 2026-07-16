@@ -9,10 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.matchcast.presentaion.theme.DividerGray
 import com.example.matchcast.presentaion.theme.MatchCastTheme
 import com.example.matchcast.presentaion.theme.utils.formatFullDate
 
@@ -37,11 +35,15 @@ fun DateComp(
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.primary
         )
-        HorizontalDivider(Modifier.weight(1f), thickness = 2.dp, color = DividerGray.copy(1.1f))
+        HorizontalDivider(
+            Modifier.weight(1f),
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.35f)
+        )
         Text(
             text = "$count $matchLabel",
             style = MaterialTheme.typography.labelMedium,
-            color = Color.Gray
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

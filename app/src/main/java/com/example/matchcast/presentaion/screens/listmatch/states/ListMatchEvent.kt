@@ -19,4 +19,8 @@ sealed class ListMatchEvent {
     data object ClearFilters : ListMatchEvent()
 
     data class OnMatchClick(val matchId: Int) : ListMatchEvent()
+
+    data class OnTeamClick(val teamName: String) : ListMatchEvent()
+
+    data object OnStandingsClick : ListMatchEvent()
 }

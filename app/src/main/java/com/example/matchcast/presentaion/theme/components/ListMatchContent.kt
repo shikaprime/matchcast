@@ -1,5 +1,6 @@
 package com.example.matchcast.presentaion.theme.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.matchcast.domain.model.Match
 import com.example.matchcast.presentaion.screens.listmatch.states.FilterType
-import com.example.matchcast.presentaion.theme.BackgroundLight
 
 @Composable
 fun ListMatchContent(
@@ -32,7 +32,9 @@ fun ListMatchContent(
     onFilterOptionSelected: (FilterType, String) -> Unit,
     onClearFilters: () -> Unit,
     onMatchClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    onTeamClick: (String) -> Unit = {},
+    onNavigateToStandings: () -> Unit = {},
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     val groupedMatches = remember(listMatches) {
         listMatches
@@ -43,7 +45,7 @@ fun ListMatchContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(BackgroundLight)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         EplHeader(
             searchSlot = {
@@ -56,7 +58,9 @@ fun ListMatchContent(
                 } else {
                     SearchButton(onClick = onSearchClick)
                 }
-            }
+            },
+            onClickSwitchThemeButton = {},
+            onClickStandingsButton = onNavigateToStandings
         )
 
         MatchFilters(
@@ -92,7 +96,7 @@ fun ListMatchContent(
                     items(matchesForDay, key = { it.matchNumber }) { match ->
                         MatchCardItem(
                             match = match,
-                            onClick = { onMatchClick(match.matchNumber) }
+                            onClick = { onMatchClick(match.matchNumber) },
                         )
                     }
                 }

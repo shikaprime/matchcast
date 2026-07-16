@@ -71,7 +71,7 @@ fun VenueCard(
             )
             Text(
                 text = geo,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 15.sp
             )

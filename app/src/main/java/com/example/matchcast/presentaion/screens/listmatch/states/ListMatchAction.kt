@@ -6,4 +6,10 @@ sealed class ListMatchAction {
     data class NavigateToDetail(
         val matchId: Int
     ): ListMatchAction()
+
+    data class NavigateToTeam(
+        val teamName: String
+    ): ListMatchAction()
+
+    data object NavigateToStandings: ListMatchAction()
 }

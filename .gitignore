@@ -13,3 +13,4 @@ git add .*.iml
 .externalNativeBuild
 .cxx
 local.properties
+.cursorrules.ini

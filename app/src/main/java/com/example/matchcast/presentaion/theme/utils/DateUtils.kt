@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-private val DISPLAY_DATE_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+private val DISPLAY_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 private val RU_LOCALE = Locale("ru")
 
 private fun parseDisplayDate(dateString: String): LocalDate? = try {
