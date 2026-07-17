@@ -13,6 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,6 +39,10 @@ class TeamViewModel @Inject constructor(
             is TeamEvent.OnBackClick -> sideEffect(TeamAction.CloseScreen)
             is TeamEvent.OnMatchClick -> sideEffect(TeamAction.NavigateToDetail(event.matchId))
             is TeamEvent.OnTeamClick -> sideEffect(TeamAction.NavigateToTeam(event.teamName))
+            is TeamEvent.OnCompareClick -> sideEffect(
+                TeamAction.NavigateToHeadToHead(currentTeamName, event.opponent)
+            )
+            is TeamEvent.OnFavoriteClick -> toggleFavorite()
         }
     }
 
@@ -48,38 +53,49 @@ class TeamViewModel @Inject constructor(
         matchLoadingJob = viewModelScope.launch {
             _viewState.value = TeamState.Loading
             try {
-                repository.getTeamMatches(teamName).collect { matches ->
-                    if (matches.isEmpty()) {
-                        _viewState.value = TeamState.Error(
-                            icon = R.drawable.error_svgrepo_com,
-                            description = "Матчи команды не найдены"
+                combine(
+                    repository.getTeamMatches(teamName),
+                    repository.isFavoriteTeam(teamName)
+                ) { matches, isFavorite -> matches to isFavorite }
+                    .collect { (matches, isFavorite) ->
+                        if (matches.isEmpty()) {
+                            _viewState.value = TeamState.Error(
+                                icon = R.drawable.error_svgrepo_com,
+                                description = "Матчи команды не найдены"
+                            )
+                            return@collect
+                        }
+
+                        val mostRecent = matches.first()
+                        val form = if (mostRecent.homeTeam == teamName) {
+                            mostRecent.homeTeamForm
+                        } else {
+                            mostRecent.awayTeamForm
+                        }
+                        val stadium = matches.firstOrNull { it.homeTeam == teamName }?.location
+                            ?: mostRecent.location
+
+                        _viewState.value = TeamState.Display(
+                            teamName = teamName,
+                            fullName = teamFullNameMap[teamName] ?: teamName,
+                            stadium = stadium,
+                            form = form,
+                            recentMatches = matches,
+                            isFavorite = isFavorite
                         )
-                        return@collect
                     }
-
-                    val mostRecent = matches.first()
-                    val form = if (mostRecent.homeTeam == teamName) {
-                        mostRecent.homeTeamForm
-                    } else {
-                        mostRecent.awayTeamForm
-                    }
-                    val stadium = matches.firstOrNull { it.homeTeam == teamName }?.location
-                        ?: mostRecent.location
-
-                    _viewState.value = TeamState.Display(
-                        teamName = teamName,
-                        fullName = teamFullNameMap[teamName] ?: teamName,
-                        stadium = stadium,
-                        form = form,
-                        recentMatches = matches
-                    )
-                }
             } catch (e: Exception) {
                 _viewState.value = TeamState.Error(
                     icon = R.drawable.error_svgrepo_com,
                     description = e.message ?: "Ошибка"
                 )
             }
+        }
+    }
+
+    private fun toggleFavorite() {
+        viewModelScope.launch {
+            repository.toggleFavoriteTeam(currentTeamName)
         }
     }
 

@@ -12,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,9 +45,16 @@ class StandingsViewModel @Inject constructor(
             _viewState.value = StandingsState.Loading
             try {
                 repository.refreshMatch()
-                repository.getStandings().collect { standings ->
-                    _viewState.value = StandingsState.Display(standings = standings)
-                }
+                combine(
+                    repository.getStandings(),
+                    repository.getFavoriteTeams()
+                ) { standings, favorites -> standings to favorites }
+                    .collect { (standings, favorites) ->
+                        _viewState.value = StandingsState.Display(
+                            standings = standings,
+                            favoriteTeamNames = favorites.map { it.teamName }.toSet()
+                        )
+                    }
             } catch (e: Exception) {
                 _viewState.value = StandingsState.Error(
                     icon = R.drawable.error_svgrepo_com,

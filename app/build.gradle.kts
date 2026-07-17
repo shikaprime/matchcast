@@ -85,10 +85,11 @@ dependencies {
     implementation(libs.coil.svg)
 
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+
 
     testImplementation(libs.turbine)
 
-    testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test.v181)
 
     testImplementation(libs.mockk.v11312)

@@ -34,6 +34,8 @@ fun ListMatchContent(
     onMatchClick: (Int) -> Unit,
     onTeamClick: (String) -> Unit = {},
     onNavigateToStandings: () -> Unit = {},
+    onNavigateToFavorites: () -> Unit = {},
+    onNavigateToAbout: () -> Unit = {},
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     val groupedMatches = remember(listMatches) {
@@ -60,7 +62,9 @@ fun ListMatchContent(
                 }
             },
             onClickSwitchThemeButton = {},
-            onClickStandingsButton = onNavigateToStandings
+            onClickStandingsButton = onNavigateToStandings,
+            onClickFavoritesButton = onNavigateToFavorites,
+            onClickAboutButton = onNavigateToAbout
         )
 
         MatchFilters(

@@ -3,8 +3,10 @@ package com.example.matchcast.presentaion.theme.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Leaderboard
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.Icon
@@ -32,7 +36,9 @@ fun EplHeader(
     modifier: Modifier = Modifier,
     searchSlot: @Composable () -> Unit,
     onClickSwitchThemeButton: () -> Unit,
-    onClickStandingsButton: () -> Unit = {}
+    onClickStandingsButton: () -> Unit = {},
+    onClickFavoritesButton: () -> Unit = {},
+    onClickAboutButton: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -52,18 +58,24 @@ fun EplHeader(
                 contentDescription = "Премьер лига",
                 modifier = Modifier.size(150.dp)
             )
-            SwitchThemeButton(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = 8.dp, end = 8.dp),
-                onClick = onClickSwitchThemeButton
-            )
-            StandingsButton(
+            Row(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(top = 8.dp, start = 8.dp),
-                onClick = onClickStandingsButton
-            )
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                StandingsButton(onClick = onClickStandingsButton)
+                FavoritesButton(onClick = onClickFavoritesButton)
+            }
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 8.dp, end = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                AboutButton(onClick = onClickAboutButton)
+                SwitchThemeButton(onClick = onClickSwitchThemeButton)
+            }
         }
         Spacer(modifier = Modifier.height(32.dp))
         searchSlot()
@@ -98,6 +110,52 @@ fun StandingsButton(
         Icon(
             imageVector = Icons.Default.Leaderboard,
             contentDescription = "Таблица",
+            modifier = Modifier.size(30.dp),
+            tint = MaterialTheme.colorScheme.surface
+        )
+    }
+}
+
+@Composable
+fun FavoritesButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = modifier
+            .background(
+                shape = CircleShape,
+                color = Color.White.copy(alpha = 0.08f)
+            )
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Favorite,
+            contentDescription = "Избранное",
+            modifier = Modifier.size(30.dp),
+            tint = MaterialTheme.colorScheme.surface
+        )
+    }
+}
+
+@Composable
+fun AboutButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = modifier
+            .background(
+                shape = CircleShape,
+                color = Color.White.copy(alpha = 0.08f)
+            )
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Info,
+            contentDescription = "О приложении",
             modifier = Modifier.size(30.dp),
             tint = MaterialTheme.colorScheme.surface
         )

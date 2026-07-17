@@ -17,6 +17,7 @@ sealed class TeamState {
         val fullName: String,
         val stadium: String,
         val form: ArrayDeque<MatchOutcome>?,
-        val recentMatches: List<Match> = emptyList()
+        val recentMatches: List<Match> = emptyList(),
+        val isFavorite: Boolean = false
     ) : TeamState()
 }

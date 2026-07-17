@@ -12,4 +12,8 @@ sealed class ListMatchAction {
     ): ListMatchAction()
 
     data object NavigateToStandings: ListMatchAction()
+
+    data object NavigateToFavorites: ListMatchAction()
+
+    data object NavigateToAbout: ListMatchAction()
 }

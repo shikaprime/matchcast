@@ -10,4 +10,8 @@ sealed class TeamEvent {
     data class OnMatchClick(val matchId: Int) : TeamEvent()
 
     data class OnTeamClick(val teamName: String) : TeamEvent()
+
+    data class OnCompareClick(val opponent: String) : TeamEvent()
+
+    data object OnFavoriteClick : TeamEvent()
 }

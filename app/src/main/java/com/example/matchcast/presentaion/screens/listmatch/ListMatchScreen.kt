@@ -69,6 +69,12 @@ fun ListMatchScreen(
             onNavigateToStandings = {
                 viewModel.obtainEvent(ListMatchEvent.OnStandingsClick)
             },
+            onNavigateToFavorites = {
+                viewModel.obtainEvent(ListMatchEvent.OnFavoritesClick)
+            },
+            onNavigateToAbout = {
+                viewModel.obtainEvent(ListMatchEvent.OnAboutClick)
+            },
             modifier = Modifier
         )
     }

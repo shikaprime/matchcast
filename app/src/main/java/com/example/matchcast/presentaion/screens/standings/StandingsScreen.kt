@@ -40,6 +40,7 @@ fun StandingsScreen(
         )
         is StandingsState.Display -> StandingsContent(
             standings = state.standings,
+            favoriteTeamNames = state.favoriteTeamNames,
             onBackClick = {
                 viewModel.obtainEvent(StandingsEvent.OnBackClick)
             },

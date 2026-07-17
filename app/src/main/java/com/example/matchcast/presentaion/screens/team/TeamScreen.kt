@@ -49,7 +49,13 @@ fun TeamScreen(
             },
             onTeamClick = { teamName ->
                 viewModel.obtainEvent(TeamEvent.OnTeamClick(teamName))
-            } 
+            },
+            onCompareClick = { opponent ->
+                viewModel.obtainEvent(TeamEvent.OnCompareClick(opponent))
+            },
+            onFavoriteClick = {
+                viewModel.obtainEvent(TeamEvent.OnFavoriteClick)
+            }
         )
     }
 }

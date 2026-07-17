@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +39,7 @@ fun StandingsContent(
     standings: List<Standing>,
     onBackClick: () -> Unit,
     onTeamClick: (String) -> Unit,
+    favoriteTeamNames: Set<String> = emptySet(),
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -67,6 +71,7 @@ fun StandingsContent(
             items(standings, key = { it.teamName }) { standing ->
                 StandingsRow(
                     standing = standing,
+                    isFavorite = standing.teamName in favoriteTeamNames,
                     onClick = { onTeamClick(standing.teamName) }
                 )
                 HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.15f))
@@ -118,6 +123,7 @@ private fun StandingsStatHeaderCell(label: String) {
 private fun StandingsRow(
     standing: Standing,
     onClick: () -> Unit,
+    isFavorite: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -153,6 +159,14 @@ private fun StandingsRow(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+            if (isFavorite) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = "Избранная команда",
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.size(14.dp)
+                )
+            }
         }
         StandingsStatCell(standing.played)
         StandingsStatCell(standing.wins)

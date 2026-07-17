@@ -55,6 +55,8 @@ class ListMatchViewModel @Inject constructor(
             is ListMatchEvent.ClearFilters -> _activeFilters.value = emptyMap()
             is ListMatchEvent.OnTeamClick -> sideEffect(ListMatchAction.NavigateToTeam(event.teamName))
             is ListMatchEvent.OnStandingsClick -> sideEffect(ListMatchAction.NavigateToStandings)
+            is ListMatchEvent.OnFavoritesClick -> sideEffect(ListMatchAction.NavigateToFavorites)
+            is ListMatchEvent.OnAboutClick -> sideEffect(ListMatchAction.NavigateToAbout)
         }
     }
 

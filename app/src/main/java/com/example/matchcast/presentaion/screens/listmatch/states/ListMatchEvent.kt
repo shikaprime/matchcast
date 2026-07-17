@@ -23,4 +23,8 @@ sealed class ListMatchEvent {
     data class OnTeamClick(val teamName: String) : ListMatchEvent()
 
     data object OnStandingsClick : ListMatchEvent()
+
+    data object OnFavoritesClick : ListMatchEvent()
+
+    data object OnAboutClick : ListMatchEvent()
 }

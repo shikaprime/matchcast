@@ -1,10 +1,14 @@
 package com.example.matchcast.data.repository
 
+import com.example.matchcast.data.local.FavoriteTeamDao
+import com.example.matchcast.data.local.FavoriteTeamEntity
 import com.example.matchcast.data.local.MatchDao
 import com.example.matchcast.data.local.MatchEntity
 import com.example.matchcast.data.local.StandingDao
 import com.example.matchcast.data.local.StandingEntity
 import com.example.matchcast.data.remote.RetrofitClient
+import com.example.matchcast.domain.model.FavoriteTeam
+import com.example.matchcast.domain.model.HeadToHead
 import com.example.matchcast.domain.model.Match
 import com.example.matchcast.domain.model.MatchOutcome
 import com.example.matchcast.domain.model.Standing
@@ -12,6 +16,7 @@ import com.example.matchcast.domain.repository.MatchRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -23,7 +28,8 @@ import javax.inject.Singleton
 @Singleton
 class MatchRepositoryImpl @Inject constructor(
     private val matchDao: MatchDao,
-    private val standingDao: StandingDao
+    private val standingDao: StandingDao,
+    private val favoriteTeamDao: FavoriteTeamDao
 ): MatchRepository {
 
     override fun getMatches(): Flow<List<Match>> {
@@ -93,9 +99,79 @@ class MatchRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getHeadToHead(teamA: String, teamB: String): Flow<HeadToHead> {
+        return combine(
+            matchDao.getMatchesBetweenTeams(teamA, teamB),
+            matchDao.getMatches()
+        ) { headToHeadEntities, allEntities ->
+            val totalFormMap = calculateTeamMatch(allEntities)
+            val matches = headToHeadEntities.map { it.toDomain(totalFormMap) }
+            buildHeadToHead(teamA, teamB, matches)
+        }
+    }
+
+    override fun getFavoriteTeams(): Flow<List<FavoriteTeam>> {
+        return favoriteTeamDao.getFavorites().map { entities ->
+            entities.map { entity ->
+                FavoriteTeam(
+                    teamName = entity.teamName,
+                    fullName = teamFullNameMap[entity.teamName] ?: entity.teamName
+                )
+            }
+        }
+    }
+
+    override fun isFavoriteTeam(teamName: String): Flow<Boolean> {
+        return favoriteTeamDao.isFavorite(teamName)
+    }
+
+    override suspend fun toggleFavoriteTeam(teamName: String) {
+        val isCurrentlyFavorite = favoriteTeamDao.isFavorite(teamName).first()
+        if (isCurrentlyFavorite) {
+            favoriteTeamDao.delete(teamName)
+        } else {
+            favoriteTeamDao.insert(FavoriteTeamEntity(teamName = teamName, addedAt = System.currentTimeMillis()))
+        }
+    }
+
+    private fun buildHeadToHead(teamA: String, teamB: String, matches: List<Match>): HeadToHead {
+        var teamAWins = 0
+        var teamBWins = 0
+        var draws = 0
+        var teamAGoals = 0
+        var teamBGoals = 0
+
+        for (match in matches) {
+            val isTeamAHome = match.homeTeam == teamA
+            val teamAScore = if (isTeamAHome) match.homeTeamScore else match.awayTeamScore
+            val teamBScore = if (isTeamAHome) match.awayTeamScore else match.homeTeamScore
+
+            teamAGoals += teamAScore
+            teamBGoals += teamBScore
+
+            when {
+                teamAScore > teamBScore -> teamAWins++
+                teamAScore < teamBScore -> teamBWins++
+                else -> draws++
+            }
+        }
+
+        return HeadToHead(
+            teamA = teamA,
+            teamB = teamB,
+            teamAWins = teamAWins,
+            teamBWins = teamBWins,
+            draws = draws,
+            teamAGoals = teamAGoals,
+            teamBGoals = teamBGoals,
+            matches = matches
+        )
+    }
+
     private fun MatchEntity.toDomain(formMap: Map<String, ArrayDeque<MatchOutcome>>): Match {
         val formattedDate = try {
-            val utcDateTime = ZonedDateTime.parse(this.dateUtc)
+            val isoDateUtc = if (this.dateUtc.contains('T')) this.dateUtc else this.dateUtc.replace(' ', 'T')
+            val utcDateTime = ZonedDateTime.parse(isoDateUtc)
             val localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault())
             localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
         } catch (e: Exception) {

@@ -1,5 +1,7 @@
 package com.example.matchcast.domain.repository
 
+import com.example.matchcast.domain.model.FavoriteTeam
+import com.example.matchcast.domain.model.HeadToHead
 import com.example.matchcast.domain.model.Match
 import com.example.matchcast.domain.model.Standing
 import kotlinx.coroutines.flow.Flow
@@ -17,4 +19,12 @@ interface MatchRepository {
     fun getStandings(): Flow<List<Standing>>
 
     fun getTeamMatches(teamName: String): Flow<List<Match>>
+
+    fun getHeadToHead(teamA: String, teamB: String): Flow<HeadToHead>
+
+    fun getFavoriteTeams(): Flow<List<FavoriteTeam>>
+
+    fun isFavoriteTeam(teamName: String): Flow<Boolean>
+
+    suspend fun toggleFavoriteTeam(teamName: String)
 }

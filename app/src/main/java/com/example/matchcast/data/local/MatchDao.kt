@@ -22,4 +22,10 @@ interface MatchDao {
 
     @Query("select * from matches where homeTeam = :teamName or awayTeam = :teamName order by dateUtc desc")
     fun getMatchesForTeam(teamName: String): Flow<List<MatchEntity>>
+
+    @Query(
+        "select * from matches where (homeTeam = :teamA and awayTeam = :teamB) " +
+            "or (homeTeam = :teamB and awayTeam = :teamA) order by dateUtc desc"
+    )
+    fun getMatchesBetweenTeams(teamA: String, teamB: String): Flow<List<MatchEntity>>
 }

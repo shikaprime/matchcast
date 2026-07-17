@@ -12,6 +12,7 @@ sealed class StandingsState {
     ) : StandingsState()
 
     data class Display(
-        val standings: List<Standing> = emptyList()
+        val standings: List<Standing> = emptyList(),
+        val favoriteTeamNames: Set<String> = emptySet()
     ) : StandingsState()
 }
