@@ -22,6 +22,10 @@ import com.example.matchcast.presentaion.screens.headtohead.HeadToHeadScreen
 import com.example.matchcast.presentaion.screens.headtohead.states.HeadToHeadAction
 import com.example.matchcast.presentaion.screens.listmatch.ListMatchScreen
 import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchAction
+import com.example.matchcast.presentaion.screens.login.LoginScreen
+import com.example.matchcast.presentaion.screens.login.states.LoginAction
+import com.example.matchcast.presentaion.signup.SignupScreen
+import com.example.matchcast.presentaion.signup.states.SignupAction
 import com.example.matchcast.presentaion.screens.onboarding.OnboardingScreen
 import com.example.matchcast.presentaion.screens.onboarding.states.OnboardingAction
 import com.example.matchcast.presentaion.screens.standings.StandingsScreen
@@ -81,7 +85,52 @@ fun MatchCastNavGraph(
                         is ListMatchAction.NavigateToAbout -> {
                             navController.navigate(Screen.About)
                         }
+                        is ListMatchAction.NavigateToLogin -> {
+                            navController.navigate(Screen.Login)
+                        }
                         is ListMatchAction.CloseScreen -> {}
+                    }
+                }
+            )
+        }
+        composable(route = Screen.Login) {
+            LoginScreen(
+                onAction = { action ->
+                    when (action) {
+                        is LoginAction.NavigateToHome -> {
+                            navController.navigate(Screen.ListMatch) {
+                                popUpTo(Screen.Login) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                        is LoginAction.NavigateToSignUp -> {
+                            navController.navigate(Screen.Signup)
+                        }
+                        is LoginAction.CloseScreen -> {
+                            navController.popBackStack()
+                        }
+                        is LoginAction.ShowMessage -> {}
+                    }
+                }
+            )
+        }
+        composable(route = Screen.Signup) {
+            SignupScreen(
+                onAction = { action ->
+                    when (action) {
+                        is SignupAction.NavigateToHome -> {
+                            navController.navigate(Screen.ListMatch) {
+                                popUpTo(Screen.Login) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                        is SignupAction.NavigateToLogin -> {
+                            navController.popBackStack()
+                        }
+                        is SignupAction.CloseScreen -> {
+                            navController.popBackStack()
+                        }
+                        is SignupAction.ShowMessage -> {}
                     }
                 }
             )

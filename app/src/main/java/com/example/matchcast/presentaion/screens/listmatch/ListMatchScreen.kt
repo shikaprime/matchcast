@@ -75,6 +75,9 @@ fun ListMatchScreen(
             onNavigateToAbout = {
                 viewModel.obtainEvent(ListMatchEvent.OnAboutClick)
             },
+            onNavigateToLogin = {
+                viewModel.obtainEvent(ListMatchEvent.OnAccountClick)
+            },
             modifier = Modifier
         )
     }

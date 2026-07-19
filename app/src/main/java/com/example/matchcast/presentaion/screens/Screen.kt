@@ -11,6 +11,8 @@ object Screen {
     const val HeadToHead = "head_to_head/{teamA}/{teamB}"
     const val Favorites = "favorites"
     const val About = "about"
+    const val Login = "login"
+    const val Signup = "signup"
 
     fun detailMatchRoute(matchId: Int): String = "detail_match/$matchId"
 

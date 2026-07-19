@@ -7,6 +7,7 @@ converterGson = "3.0.0"
 coreKtx = "1.19.0"
 desugar_jdk_libs = "2.1.5"
 desugar_jdk_libsVersion = "2.0.4"
+firebaseBom = "34.16.0"
 fluentSystemIcons = "1.1.204"
 hiltAndroid = "2.60.1"
 hiltCompiler = "2.60.1"
@@ -25,6 +26,7 @@ materialIconsExtended = "1.6.0"
 mockk = "1.14.11"
 mockkVersion = "1.13.12"
 navigationUiKtx = "2.9.8"
+playServicesAuth = "21.6.0"
 retrofit = "3.0.0"
 room = "2.8.4"
 ksp = "2.2.10-2.0.2"
@@ -50,6 +52,9 @@ coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilSvg" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 desugar_jdk_libs-v204 = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libsVersion" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 fluent-system-icons = { module = "com.microsoft.design:fluent-system-icons", version.ref = "fluentSystemIcons" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
@@ -70,6 +75,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-coroutines-test-v181 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTestVersion" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-v11312 = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }

@@ -6,8 +6,11 @@ import com.example.matchcast.data.local.FavoriteTeamDao
 import com.example.matchcast.data.local.MatchDao
 import com.example.matchcast.data.local.OnboardingPreferences
 import com.example.matchcast.data.local.StandingDao
+import com.example.matchcast.data.repository.AuthRepositoryImpl
 import com.example.matchcast.data.repository.MatchRepositoryImpl
+import com.example.matchcast.domain.repository.AuthRepository
 import com.example.matchcast.domain.repository.MatchRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,5 +52,16 @@ object AppModule {
     @Provides
     fun provideRepository(impl: MatchRepositoryImpl): MatchRepository{
         return impl
+    }
+
+    @Provides
+    fun provideAuthRepository(impl: AuthRepositoryImpl): AuthRepository{
+        return impl
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }

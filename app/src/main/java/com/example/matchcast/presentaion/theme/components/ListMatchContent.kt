@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -36,6 +39,7 @@ fun ListMatchContent(
     onNavigateToStandings: () -> Unit = {},
     onNavigateToFavorites: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
+    onNavigateToLogin: () -> Unit = {},
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     val groupedMatches = remember(listMatches) {
@@ -43,7 +47,6 @@ fun ListMatchContent(
             .distinctBy { it.matchNumber }
             .groupBy { match -> match.formattedDateUtc.split(" ").firstOrNull() ?: "" }
     }
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -64,7 +67,8 @@ fun ListMatchContent(
             onClickSwitchThemeButton = {},
             onClickStandingsButton = onNavigateToStandings,
             onClickFavoritesButton = onNavigateToFavorites,
-            onClickAboutButton = onNavigateToAbout
+            onClickAboutButton = onNavigateToAbout,
+            onClickAccountButton = onNavigateToLogin
         )
 
         MatchFilters(

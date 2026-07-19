@@ -27,4 +27,6 @@ sealed class ListMatchEvent {
     data object OnFavoritesClick : ListMatchEvent()
 
     data object OnAboutClick : ListMatchEvent()
+
+    data object OnAccountClick : ListMatchEvent()
 }

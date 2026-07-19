@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Leaderboard
@@ -38,7 +40,8 @@ fun EplHeader(
     onClickSwitchThemeButton: () -> Unit,
     onClickStandingsButton: () -> Unit = {},
     onClickFavoritesButton: () -> Unit = {},
-    onClickAboutButton: () -> Unit = {}
+    onClickAboutButton: () -> Unit = {},
+    onClickAccountButton: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -47,6 +50,7 @@ fun EplHeader(
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
             )
+            .statusBarsPadding()
             .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 16.dp),
     ) {
         Box(
@@ -73,6 +77,7 @@ fun EplHeader(
                     .padding(top = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                AccountButton(onClick = onClickAccountButton)
                 AboutButton(onClick = onClickAboutButton)
                 SwitchThemeButton(onClick = onClickSwitchThemeButton)
             }
@@ -133,6 +138,29 @@ fun FavoritesButton(
         Icon(
             imageVector = Icons.Default.Favorite,
             contentDescription = "Избранное",
+            modifier = Modifier.size(30.dp),
+            tint = MaterialTheme.colorScheme.surface
+        )
+    }
+}
+
+@Composable
+fun AccountButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = modifier
+            .background(
+                shape = CircleShape,
+                color = Color.White.copy(alpha = 0.08f)
+            )
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.AccountCircle,
+            contentDescription = "Аккаунт",
             modifier = Modifier.size(30.dp),
             tint = MaterialTheme.colorScheme.surface
         )
