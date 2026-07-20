@@ -173,7 +173,7 @@ class MatchRepositoryImpl @Inject constructor(
             val isoDateUtc = if (this.dateUtc.contains('T')) this.dateUtc else this.dateUtc.replace(' ', 'T')
             val utcDateTime = ZonedDateTime.parse(isoDateUtc)
             val localDateTime = utcDateTime.withZoneSameInstant(ZoneId.systemDefault())
-            localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+            localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
