@@ -17,5 +17,5 @@ sealed class ListMatchAction {
 
     data object NavigateToAbout: ListMatchAction()
 
-    data object NavigateToLogin: ListMatchAction()
+    data object NavigateToAccount: ListMatchAction()
 }

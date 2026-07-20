@@ -24,6 +24,8 @@ import com.example.matchcast.presentaion.screens.listmatch.ListMatchScreen
 import com.example.matchcast.presentaion.screens.listmatch.states.ListMatchAction
 import com.example.matchcast.presentaion.screens.login.LoginScreen
 import com.example.matchcast.presentaion.screens.login.states.LoginAction
+import com.example.matchcast.presentaion.screens.account.AccountScreen
+import com.example.matchcast.presentaion.screens.account.states.AccountAction
 import com.example.matchcast.presentaion.signup.SignupScreen
 import com.example.matchcast.presentaion.signup.states.SignupAction
 import com.example.matchcast.presentaion.screens.onboarding.OnboardingScreen
@@ -85,10 +87,29 @@ fun MatchCastNavGraph(
                         is ListMatchAction.NavigateToAbout -> {
                             navController.navigate(Screen.About)
                         }
-                        is ListMatchAction.NavigateToLogin -> {
-                            navController.navigate(Screen.Login)
+                        is ListMatchAction.NavigateToAccount -> {
+                            navController.navigate(Screen.Account)
                         }
                         is ListMatchAction.CloseScreen -> {}
+                    }
+                }
+            )
+        }
+        composable(route = Screen.Account) {
+            AccountScreen(
+                onAction = { action ->
+                    when (action) {
+                        is AccountAction.CloseScreen -> {
+                            navController.popBackStack()
+                        }
+                        is AccountAction.NavigateToLogin -> {
+                            navController.navigate(Screen.Login) {
+                                popUpTo(Screen.Account) { inclusive = true }
+                            }
+                        }
+                        is AccountAction.NavigateToResetPassword -> {
+                            // TODO: ForgotPassword screen
+                        }
                     }
                 }
             )

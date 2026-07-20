@@ -1,6 +1,7 @@
 package com.example.matchcast.domain.repository
 
-import com.example.matchcast.domain.AuthUser
+import com.example.matchcast.domain.model.Account
+import com.example.matchcast.domain.model.AuthUser
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
@@ -20,4 +21,6 @@ interface AuthRepository {
     suspend fun linkWithGoogle(idToken: String): AuthUser
 
     suspend fun signInWithGoogle(idToken: String): AuthUser
+
+    fun getAccount(): Account
 }

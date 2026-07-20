@@ -13,6 +13,7 @@ object Screen {
     const val About = "about"
     const val Login = "login"
     const val Signup = "signup"
+    const val Account = "account"
 
     fun detailMatchRoute(matchId: Int): String = "detail_match/$matchId"
 

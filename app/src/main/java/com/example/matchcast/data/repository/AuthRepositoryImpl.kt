@@ -1,7 +1,8 @@
 package com.example.matchcast.data.repository
 
 import com.example.matchcast.data.auth.FirebaseAuthDataSource
-import com.example.matchcast.domain.AuthUser
+import com.example.matchcast.domain.model.Account
+import com.example.matchcast.domain.model.AuthUser
 import com.example.matchcast.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
@@ -59,6 +60,15 @@ class AuthRepositoryImpl @Inject constructor(
           return firebase.signUpWithGoogleIdToken(idToken).toDomain()
      }
 
+     override fun getAccount(): Account {
+          val user = firebase.currentUser
+          return Account(
+               name = user?.displayName,
+               email = user?.email,
+               photo = user?.photoUrl
+          )
+     }
+
      fun FirebaseUser.toDomain(): AuthUser{
           return AuthUser(
                uid = this.uid,
@@ -67,4 +77,5 @@ class AuthRepositoryImpl @Inject constructor(
                isAnonymous = this.isAnonymous
           )
      }
+
 }

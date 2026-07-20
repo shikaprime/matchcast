@@ -57,7 +57,7 @@ class ListMatchViewModel @Inject constructor(
             is ListMatchEvent.OnStandingsClick -> sideEffect(ListMatchAction.NavigateToStandings)
             is ListMatchEvent.OnFavoritesClick -> sideEffect(ListMatchAction.NavigateToFavorites)
             is ListMatchEvent.OnAboutClick -> sideEffect(ListMatchAction.NavigateToAbout)
-            is ListMatchEvent.OnAccountClick -> sideEffect(ListMatchAction.NavigateToLogin)
+            is ListMatchEvent.OnAccountClick -> sideEffect(ListMatchAction.NavigateToAccount)
         }
     }
 

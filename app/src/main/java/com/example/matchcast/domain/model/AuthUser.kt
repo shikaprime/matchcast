@@ -1,4 +1,4 @@
-package com.example.matchcast.domain
+package com.example.matchcast.domain.model
 
 data class AuthUser(
     val uid: String,
